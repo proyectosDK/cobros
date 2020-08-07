@@ -18,6 +18,7 @@ class CreateCuotasTable extends Migration
             $table->decimal('cuota',8,2);
             $table->integer('limite');
             $table->decimal('extra',8,2);
+            $table->boolean('actual')->default(1);
             $table->timestamps();
         });
     }

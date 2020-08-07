@@ -28,7 +28,7 @@ class UserController extends ApiController
     //retorna todos los registros de la tabla
     public function index()
     {
-        $users = User::with('empleado','tipo_usuario')->get();
+        $users = User::with('tipo_usuario')->get();
         return $this->showAll($users);
     }
 
@@ -41,8 +41,7 @@ class UserController extends ApiController
 
         $reglas = [
             'password' => 'required', 'string', 'min:6', 'confirmed',
-            'tipo_usuario_id' =>'required|exists:tipo_usuarios,id',
-            'empleado_id' =>'required|exists:empleados,id'
+            'tipo_usuario_id' =>'required|exists:tipo_usuarios,id'
         ];
 
         $empleado = Empleado::find($request->empleado_id);

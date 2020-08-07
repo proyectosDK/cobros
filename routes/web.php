@@ -24,9 +24,18 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::name('cambiar_contraseña')->post('users_change_password','Acceso\UserController@changePassword');
 
 
-//=====================TIPO DOCUMENTOS A ADJUNTAR==========================//
+//=====================ANIOS==========================//
 Route::get('aniosView', 'Configuracion\AnioController@view')->name('aniosView');
 Route::resource('anios', 'Configuracion\AnioController', ['except' => ['create', 'edit']]);
+
+//=====================CUOTAS==========================//
+Route::get('cuotasView', 'Configuracion\CuotaController@view')->name('cuotasView');
+Route::resource('cuotas', 'Configuracion\CuotaController', ['except' => ['create', 'edit']]);
+Route::name('cambiar_estado')->put('cuotas_cambiar_estado/{id}', 'Configuracion\CuotaController@cambiarEstado');
+
+//=====================UBICACIONES==========================//
+Route::get('ubicacionesView', 'Configuracion\UbicacionController@view')->name('ubicacionesView');
+Route::resource('ubicacions', 'Configuracion\UbicacionController', ['except' => ['create', 'edit']]);
 
 //=====================TIPO USUARIOS==========================//
 Route::get('tipoUsuariosView', 'Acceso\TipoUsuarioController@view')->name('tipoUsuariosView');

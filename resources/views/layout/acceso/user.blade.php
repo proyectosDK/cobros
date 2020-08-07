@@ -19,7 +19,6 @@
               <div class="panel-body table-responsive" id="listadoregistros">
                   <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                     <thead>
-                      <th>Empleado</th>
                       <th>Correo electronico</th>
                       <th>Rol</th>
                       <th>Opciones</th>
@@ -29,7 +28,6 @@
                             options: dataTableOptions
                           }">  
                       <tr>
-                        <td data-bind="text: empleado.nombre1+' '+empleado.apellido1"></td>
                         <td data-bind="text: email"></td>
                         <td data-bind="text: tipo_usuario.nombre"></td>
                         <td width="10%">
@@ -40,7 +38,6 @@
                     </tr>                          
                     </tbody>
                     <tfoot>
-                      <th>Empleado</th>
                       <th>Correo electronico</th>
                       <th>Rol</th>
                       <th>Opciones</th>
@@ -74,24 +71,10 @@
                                      minlength="6" maxlength="25" required>
                               <span class="text-danger errorConfirmation help-inline"></span>
                           </div>
-                          <div data-bind="visible:!model.userController.editMode()" class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                              <label for="empleado">Empleado<span class="text-danger"> *</span></label>
-                                  <select id="empleado" class="form-control show-tick selectpicker" data-live-search="true"  
-                                          data-bind="selectPicker: true,
-                                          optionsText: function(empleado) {return empleado.nombre1+' '+empleado.apellido1},
-                                          optionsValue: 'id',
-                                          value: empleado_id, 
-                                          selectPickerOptions: { optionsArray: model.userController.empleados},
-                                          optionsCaption: '--selecione empleado--'"
-                                          data-error=".errorEmpleado"
-                                          required>
-                                  </select>
-                                  <span class="errorDepartamento text-danger help-inline"></span>
-                                </div>
 
                           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <label for="empleado">Rol <span class="text-danger"> *</span></label>
-                                <select id="empleado" class="form-control show-tick selectpicker" data-live-search="true"  
+                            <label for="rol">Rol <span class="text-danger"> *</span></label>
+                                <select id="rol" class="form-control show-tick selectpicker" data-live-search="true"  
                                         data-bind="selectPicker: true,
                                         optionsText: function(tipo_usuario) {return tipo_usuario.nombre},
                                         optionsValue: 'id',

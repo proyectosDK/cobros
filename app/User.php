@@ -13,13 +13,8 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'email', 'password','empleado_id','tipo_usuario_id',
+        'email', 'password','tipo_usuario_id',
     ];
-
-    public function empleado()
-    {
-        return $this->belongsTo(Empleado::class);
-    }
 
     public function tipo_usuario()
     {

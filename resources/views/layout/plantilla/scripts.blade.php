@@ -29,11 +29,15 @@
 <!-- scripts  -->
 <script src="{{asset('jsfiles/js/model.js')}}"></script>
 <script src="{{asset('jsfiles/js/anio.js')}}"></script>
+<script src="{{asset('jsfiles/js/cuota.js')}}"></script>
+<script src="{{asset('jsfiles/js/ubicacion.js')}}"></script>
 <script src="{{asset('jsfiles/js/tipoUsuario.js')}}"></script>
 <script src="{{asset('jsfiles/js/user.js')}}"></script>
 
 <!-- scripts  axios-->
 <script src="{{asset('jsfiles/services/anioService.js')}}"></script>
+<script src="{{asset('jsfiles/services/cuotaService.js')}}"></script>
+<script src="{{asset('jsfiles/services/ubicacionService.js')}}"></script>
 <script src="{{asset('jsfiles/services/tipoUsuarioService.js')}}"></script>
 <script src="{{asset('jsfiles/services/userService.js')}}"></script>
 
