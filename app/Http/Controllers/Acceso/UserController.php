@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Acceso;
 
 use App\User;
-use App\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -25,6 +24,11 @@ class UserController extends ApiController
        return view('layout.acceso.user');
     }
 
+    public function viewCambiarContraseña()
+    {
+       return view('layout.acceso.cambiarContrasena');
+    }
+
     //retorna todos los registros de la tabla
     public function index()
     {
@@ -35,21 +39,17 @@ class UserController extends ApiController
     //guardar un nuevo registro
     public function store(Request $request)
     {
-        $usuario = User::where('empleado_id',$request->empleado_id)->first();
-
-        if($usuario !== null) return $this->errorResponse('empleado ya tiene usuario creado', 422);
 
         $reglas = [
+            'email'=> 'required|email|unique:users',
             'password' => 'required', 'string', 'min:6', 'confirmed',
             'tipo_usuario_id' =>'required|exists:tipo_usuarios,id'
         ];
-
-        $empleado = Empleado::find($request->empleado_id);
         
         $this->validate($request, $reglas);
         $data = $request->all();
         $data['password'] = bcrypt($request->password);
-        $data['email'] = $empleado->email;
+        $data['email'] = $request->email;
 
         $user = User::create($data);
 
@@ -69,12 +69,14 @@ class UserController extends ApiController
     public function update(Request $request, User $user)
     {
         $reglas = [
-            'tipo_usuario_id' =>'required|exists:tipo_usuarios,id'
+            'tipo_usuario_id' =>'required|exists:tipo_usuarios,id',
+            'email' => 'required|string|unique:users,email,' . $user->id
         ];
 
         $this->validate($request, $reglas);
 
         $user->tipo_usuario_id = $request->tipo_usuario_id;
+        $user->email = $request->email;
 
          if (!$user->isDirty()) {
             return $this->errorResponse('Se debe especificar al menos un valor diferente para actualizar', 422);
@@ -98,7 +100,7 @@ class UserController extends ApiController
     //funcion para cambiar contraseña
     public function changePassword(Request $request)
     {
-        $user = User::find($request->id);
+        $user = auth()->user();
 
         $reglas = [
             'password' => 'required', 'string', 'min:6', 'confirmed',

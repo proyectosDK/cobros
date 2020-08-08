@@ -21,6 +21,9 @@ Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+
+Route::get('cambiarContrasenaView', 'Acceso\userController@viewCambiarContraseña')->name('cambiarContrasenaView');
 Route::name('cambiar_contraseña')->post('users_change_password','Acceso\UserController@changePassword');
 
 

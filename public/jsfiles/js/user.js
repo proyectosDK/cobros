@@ -3,16 +3,15 @@ model.userController = {
 
     user: {
         id: ko.observable(null),
-        empleado_id: ko.observable(null),
         tipo_usuario_id: ko.observable(null),
         email: ko.observable(""),
         password: ko.observable(""),
-        password_confirmation: ko.observable("")
+        password_confirmation: ko.observable(""),
+        old_password: ko.observable("")
     },
 
     users: ko.observableArray([]),
     tipoUsuarios: ko.observableArray([]),
-    empleados: ko.observableArray([]),
     insertMode: ko.observable(false),
     editMode: ko.observable(false),
     gridMode: ko.observable(true),
@@ -23,11 +22,10 @@ model.userController = {
     map: function (data) {
         var form = model.userController.user;
         form.id(data.id);
-        form.empleado_id(data.empleado_id);
-        $('#empleado_id').selectpicker('refresh');
-        form.tipo_usuario_id(data.tipo_usuario_id);
-        $('#tipo_usuario').selectpicker('refresh');
         form.email(data.email);
+        form.tipo_usuario_id(data.tipo_usuario_id);
+        $('#rol').selectpicker('refresh');
+        
     },
 
     //nuevo registro, limpiar datos del formulario
@@ -181,24 +179,12 @@ model.userController = {
         .catch(r => {});
     },
 
-    //funcion para volver al index, resetea variables de bandera
-    getEmpleados: function(){
-        var self = model.userController;
-        //llamada al servicio
-        empleadoService.getAll()
-        .then(r => {
-            self.empleados(r.data);
-        })
-        .catch(r => {});
-    },
-
     getAll: function(){
         let self = model.userController;
         //llamada al servicio
         userService.getAll()
         .then(r => {
             self.users(r.data);
-            self.getEmpleados();
         })
         .catch(r => {});
     },
@@ -208,7 +194,40 @@ model.userController = {
 
         //llamada al servicio
         self.getAll();
-
         self.getTipoUsuarios();
-    }
+    },
+
+
+    //cambiar contraseña
+    cambiar: function(){
+        let self = model.userController;
+        var validator = $("#changeForm").validate({
+            rules: {
+                password: "required",
+                password_confirmation: {
+                    equalTo: "#password"
+                }
+            },
+            messages: {
+                password: "la contraseña es obligatoria",
+                confirmpassword: " Las contraseñas no coinciden"
+            }
+        });
+
+
+        if (!validator.form()) {
+            return
+        }
+
+        var data = self.user;
+        var dataParams = ko.toJS(data);
+        userService.cambiarContraseña(dataParams)
+        .then(r => {
+            toastr.info('contraseña modificada con éxito','exito')
+            self.clearData();
+        })
+        .catch(r => {
+            toastr.error(r.response.data.error)
+        });
+    },
 };

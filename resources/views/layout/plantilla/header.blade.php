@@ -43,7 +43,10 @@
                   
                   <!-- Menu Footer-->
                   <li class="user-footer">
-                    
+                    <div class="pull-left">
+                      <a href="{{ route('cambiarContrasenaView') }}" class="btn btn-default btn-flat">Cambiar contraseña</a>
+                    </div>
+
                     <div class="pull-right">
                       <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Cerrar</a>
                     </div>

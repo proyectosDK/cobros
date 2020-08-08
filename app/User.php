@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Empleado;
 use App\TipoUsuario;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;

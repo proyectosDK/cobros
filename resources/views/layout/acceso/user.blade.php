@@ -57,19 +57,11 @@
                     <div class="modal-body">
                       <div class="panel-body" id="formularioregistros">
                         <form name="formulario" id="formulario" data-bind="with: model.userController.user">
-                          <div data-bind="visible:!model.userController.editMode()" class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <label for="text2">Contraseña <span class="text-danger"> *</span></label>
-                                <input type="password" id="password" name="password" placeholder="ingrese contrase{a" class="form-control"data-bind="value: password"
-                                     data-error=".errorPassword"
-                                     minlength="6" maxlength="25" required>
-                              <span class="text-danger errorPassword help-inline"></span>
-                          </div>
-                          <div data-bind="visible:!model.userController.editMode()" class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <label for="text2">Confirmar contraseña <span class="text-danger"> *</span></label>
-                                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="ingrese correo electronico" class="form-control"data-bind="value: password_confirmation"
-                                     data-error=".errorConfirmation"
-                                     minlength="6" maxlength="25" required>
-                              <span class="text-danger errorConfirmation help-inline"></span>
+                          <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="text2">Correo electronico <span class="text-danger"> *</span></label>
+                                <input type="email" id="email" name="email" placeholder="ingrese correoelectronico" class="form-control"data-bind="value: email"
+                                     data-error=".errorEmail" required>
+                              <span class="text-danger errorEmail help-inline"></span>
                           </div>
 
                           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -86,6 +78,22 @@
                                 </select>
                                 <span class="errorTipo text-danger help-inline"></span>
                               </div>
+
+                          <div data-bind="visible:!model.userController.editMode()" class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="text2">Contraseña <span class="text-danger"> *</span></label>
+                                <input type="password" id="password" name="password" placeholder="ingrese contrase{a" class="form-control"data-bind="value: password"
+                                     data-error=".errorPassword"
+                                     minlength="6" maxlength="25" required>
+                              <span class="text-danger errorPassword help-inline"></span>
+                          </div>
+                          <div data-bind="visible:!model.userController.editMode()" class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="text2">Confirmar contraseña <span class="text-danger"> *</span></label>
+                                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="ingrese correo electronico" class="form-control"data-bind="value: password_confirmation"
+                                     data-error=".errorConfirmation"
+                                     minlength="6" maxlength="25" required>
+                              <span class="text-danger errorConfirmation help-inline"></span>
+                          </div>
+
 
                           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <a class="btn btn-primary btn-sm" data-bind="click:  model.userController.createOrEdit"><i class="fa fa-save"></i> Guardar</a>
