@@ -19,7 +19,7 @@
               <div class="panel-body table-responsive" id="listadoregistros">
                   <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                     <thead>
-                      <th>anio</th>
+                      <th>año</th>
                       <th>Opciones</th>
                     </thead>
                     <tbody data-bind="dataTablesForEach : {
@@ -36,7 +36,7 @@
                     </tr>                          
                     </tbody>
                     <tfoot>
-                      <th>anio</th>
+                      <th>año</th>
                       <th>Opciones</th>
                     </tfoot>
                   </table>
