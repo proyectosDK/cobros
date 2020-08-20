@@ -25,6 +25,9 @@
         <ul class="treeview-menu">
           <li id="lub"><a href="{{ route('ubicacionesView') }}"><i class="fa fa-circle-o"></i> Ubicaciones</a></li>
         </ul>
+        <ul class="treeview-menu">
+          <li id="lub"><a href="{{ route('clientesView') }}"><i class="fa fa-circle-o"></i> Clientes</a></li>
+        </ul>
       </li>
       @endif
 

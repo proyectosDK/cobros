@@ -40,6 +40,17 @@ Route::name('cambiar_estado')->put('cuotas_cambiar_estado/{id}', 'Configuracion\
 Route::get('ubicacionesView', 'Configuracion\UbicacionController@view')->name('ubicacionesView');
 Route::resource('ubicacions', 'Configuracion\UbicacionController', ['except' => ['create', 'edit']]);
 
+
+//=====================CLIENTES==========================//
+Route::get('clientesView', 'Configuracion\ClienteController@view')->name('clientesView');
+Route::resource('clientes', 'Configuracion\ClienteController', ['except' => ['create', 'edit']]);
+
+
+//=====================ESTADO CLIENTES==========================//
+Route::get('/historial', 'Configuracion\EstadoController@view')->name('historial');
+Route::resource('estados', 'Configuracion\EstadoController', ['except' => ['create', 'edit']]);
+
+
 //=====================TIPO USUARIOS==========================//
 Route::get('tipoUsuariosView', 'Acceso\TipoUsuarioController@view')->name('tipoUsuariosView');
 Route::resource('tipoUsuarios', 'Acceso\TipoUsuarioController', ['except' => ['create', 'edit']]);

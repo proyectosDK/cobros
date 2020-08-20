@@ -19,7 +19,7 @@ class CreateTelefonosClientesTable extends Migration
             $table->string('numero',15);
             $table->timestamps();
 
-            $table->foreign('cliente_id')->references('id')->on('clientes')->onUpdate('cascade');
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

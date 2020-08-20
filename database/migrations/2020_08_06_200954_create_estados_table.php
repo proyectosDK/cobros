@@ -16,7 +16,7 @@ class CreateEstadosTable extends Migration
         Schema::create('estados', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('cliente_id');
-            $table->char('estado',1);
+            $table->char('estado',1);//0=>suspendido, 1=>se dio de baja
             $table->date('fecha');
             $table->date('observaciones')->nullable();
             $table->timestamps();
