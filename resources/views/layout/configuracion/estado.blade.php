@@ -24,6 +24,7 @@
                   <div class="box-tools pull-right">
                   </div><hr />
 
+                  <strong>INFORMACION: </strong><br>
                   <address data-bind="with: model.estadoController.cliente">
                     <strong>Nombre completo: </strong> <span data-bind="text: nombres"></span><br>
                     <strong>DPI: </strong> <span data-bind="text: cui"></span><br>
@@ -31,13 +32,99 @@
                     <strong>Edad: </strong> <span data-bind="text: edad"></span> años<br>
                     <strong>Ubicación: </strong> <span data-bind="text: ubicacion"></span><br>
                     <strong>Fecha inicio de servicio: </strong> <span data-bind="text: fecha_inicio"></span><br>
-                    <strong>Estado: </strong> <span data-bind="text: estado == 'A' ? 'Activo':'Inactivo', css: estado=='A' ? 'label-success':'label-danger' "></span><br>
+                    <strong>Estado: </strong> <span data-bind="text: estado() == 'A' ? 'Activo':'Inactivo', css: estado()=='A' ? 'label-success':'label-danger' "></span><br>
                   </address>
+
+                  <hr />
+
+                  <h3> Cambiar estado</h3>
+
+                  <form id="formulario" class="form" data-bind="with: model.estadoController.estado">
+                      <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        <label for="rol">Acción <span class="text-danger"> *</span></label>
+                            <select class="form-control" id="rol" data-bind="options: model.estadoController.estadosAction, optionsText: 'nombre', optionsValue: 'valor',
+                             optionsCaption: '--seleccione acción--',
+                             value: estado" 
+                             data-error=".errorEstado"
+                            required></select>
+                            <span class="errorEstado text-danger help-inline"></span>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                            <label for="text2">Fecha <span class="text-danger"> *</span></label>
+                                <input type="date"  id="fecha_nac" name="fecha" class="form-control"data-bind="value: fecha"
+                                     data-error=".errorFn" required>
+                            <span class="errorFn text-danger help-inline"></span>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label for="text2">Razón <span class="text-danger"> *</span></label>
+                                <input type="text"  id="observaciones" name="observaciones" class="form-control"data-bind="value: observaciones"
+                                     data-error=".errorOb" minlength="5" maxlength="255" required>
+                            <span class="errorOb text-danger help-inline"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                          <a class="btn btn-primary btn-sm pull-right" data-bind="click:  model.estadoController.createOrEdit"><i class="fa fa-save"></i> Guardar</a>
+                        </div>
+
+                  </form>
+                  
               </div>
               <!-- /.box-header -->
               <!-- centro -->
               <div class="panel-body table-responsive" id="listadoregistros">
+                <div class="box-header with-border">
+                  <h1 class="box-title"> HISTORIAL </h1>
+                </div>
+                <ul class="timeline">
+                  <!-- ko foreach: {data: model.estadoController.estados, as: 'e'} -->
+                  <li class="time-label">
+                      <span data-bind="text: e.fecha, css: e.class"></span>
+                  </li>
+                  <li>
+                      <i data-bind="css: e.icon"></i>
+                      <div class="timeline-item">
+                        <span data-bind="visible: e.delete" class="time" data-toggle="tooltip" title="eliminar acción">
+                          <a class="btn btn-danger btn-xs" data-bind="click: model.estadoController.destroy">
+                            <i class="fa fa-minus"></i><span class="text-danger">
+                          </a>
+                        </span>
+                          <h3 class="timeline-header"><a data-bind="text: e.estado_name"> </a> ...</h3>
+                          <div class="timeline-body" data-bind="text: e.observacion">
+                              
+                          </div>
+                      </div>
+                  </li>
+                   <!-- /ko -->
 
+                  <!-- timeline time label -->
+                  <li class="time-label">
+                      <span class="bg-green" data-bind="text: model.estadoController.cliente.fecha_inicio()">
+                      </span>
+                  </li>
+                  <!-- /.timeline-label -->
+
+                  <!-- timeline item -->
+                  <li>
+                      <!-- timeline icon -->
+                      <i class="fa fa-calendar bg-blue"></i>
+                      <div class="timeline-item">
+                         <!-- <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>-->
+
+                          <h3 class="timeline-header"><a>Inicio servicio</a> ...</h3>
+
+                          <div class="timeline-body">
+                              inicio servicio de cliente
+                          </div>
+
+                         <!--  <div class="timeline-footer">
+                              <a class="btn btn-primary btn-xs">...</a>
+                          </div>-->
+                      </div>
+                  </li>
+                  <!-- END timeline item -->
+
+                  ...
+
+              </ul>
               </div>
 
               <!--Fin centro -->

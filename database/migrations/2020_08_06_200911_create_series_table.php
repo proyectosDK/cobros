@@ -15,10 +15,11 @@ class CreateSeriesTable extends Migration
     {
         Schema::create('series', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->char('serie',1);
+            $table->char('serie',1)->unique();
             $table->integer('inicio');
-            $table->integer('total_comprobantes');
+            $table->integer('total');
             $table->integer('no_actual');
+            $table->boolean('actual')->default(1);
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ class CreateEstadosTable extends Migration
             $table->unsignedBigInteger('cliente_id');
             $table->char('estado',1);//0=>suspendido, 1=>se dio de baja
             $table->date('fecha');
-            $table->date('observaciones')->nullable();
+            $table->string('observaciones',255)->nullable();
             $table->timestamps();
 
             $table->foreign('cliente_id')->references('id')->on('clientes')->onUpdate('cascade');

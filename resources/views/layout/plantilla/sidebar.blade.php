@@ -34,6 +34,19 @@
       @if(Auth::user()->tipo_usuario_id == 1)
         <li id="mAcceso" class="treeview">
           <a href="#">
+            <i class="fa fa-money"></i> <span>Cobros</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li id="ltipoUsuario"><a href="{{ route('seriesView') }}"><i class="fa fa-circle-o"></i> Series</a></li>
+            
+          </ul>
+        </li>        
+      @endif
+
+      @if(Auth::user()->tipo_usuario_id == 1)
+        <li id="mAcceso" class="treeview">
+          <a href="#">
             <i class="fa fa-folder"></i> <span>Acceso</span>
             <i class="fa fa-angle-left pull-right"></i>
           </a>

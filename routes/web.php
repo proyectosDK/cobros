@@ -50,6 +50,10 @@ Route::resource('clientes', 'Configuracion\ClienteController', ['except' => ['cr
 Route::get('/historial', 'Configuracion\EstadoController@view')->name('historial');
 Route::resource('estados', 'Configuracion\EstadoController', ['except' => ['create', 'edit']]);
 
+//=====================SERIES==========================//
+Route::get('/seriesView', 'Cobros\SerieController@view')->name('seriesView');
+Route::resource('series', 'Cobros\SerieController', ['except' => ['create', 'edit']]);
+
 
 //=====================TIPO USUARIOS==========================//
 Route::get('tipoUsuariosView', 'Acceso\TipoUsuarioController@view')->name('tipoUsuariosView');

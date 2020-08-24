@@ -5,7 +5,8 @@ model.estadoController = {
         id: ko.observable(null),
         cliente_id: ko.observable(null),
         estado: ko.observable(null),
-        fecha: ko.observable("")
+        fecha: ko.observable(""),
+        observaciones: ko.observable("")
     },
 
    cliente: {
@@ -23,7 +24,7 @@ model.estadoController = {
     insertMode: ko.observable(false),
     editMode: ko.observable(false),
     gridMode: ko.observable(true),
-    estados: [{ nombre: 'Dar de alta', valor: 1 }, { nombre: 'Dar de baja', valor: 2 }, { nombre: 'Suspender', valor: 3 }],
+    estadosAction: [{ nombre: 'Dar de alta', valor: 1 }, { nombre: 'Dar de baja', valor: 2 }, { nombre: 'Suspender', valor: 3 }],
 
 
     //mapear funcion para editar
@@ -91,7 +92,7 @@ model.estadoController = {
         .then(r => {
            toastr.info('registro agregado con éxito','exito')
            $('#nuevo').modal('hide');
-            self.volverIndex();  
+            self.volverIndex(dataParams.cliente_id);  
         })
         .catch(r => {
             toastr.error(r.response.data.error)
@@ -109,7 +110,7 @@ model.estadoController = {
         .then(r => {
             toastr.info("registro actualizado con éxito",'éxito');
             $('#nuevo').modal('hide');
-            self.volverIndex();
+            self.volverIndex(dataParams.cliente_id);
         })
         .catch(r => {
             toastr.error(r.response.data.error)
@@ -120,15 +121,15 @@ model.estadoController = {
     destroy: function (data) {
         let self= model.estadoController;
         bootbox.confirm({ 
-            title: "eliminar estado",
-            message: "¿Esta seguro que quiere eliminar " + data.nombre + "?",
+            title: "remover acción",
+            message: "¿Esta seguro que quiere remover acción?",
             callback: function(result){ 
                 if (result) {
                     //llamada al servicio
                     estadoService.destroy(data)
                     .then(r => {
                         toastr.info("registro eliminado éxito",'éxito');
-                        self.volverIndex();
+                        self.volverIndex(data.cliente_id);
                     })
                     .catch(r => {
                         toastr.error(r.response.data.error)
@@ -147,13 +148,13 @@ model.estadoController = {
     },
 
 //funcion para volver al index, resetea variables de bandera
-    volverIndex(){
+    volverIndex(id){
         let self = model.estadoController;
         self.insertMode(false);
         self.editMode(false);
         self.gridMode(true)
         self.clearData()
-        self.initialize()
+        self.initialize(id)
     },
 
     getCliente: function(id){
@@ -171,14 +172,40 @@ model.estadoController = {
             self.cliente.ubicacion(r.data.ubicacion+' '+r.data.ubicacion_cliente.nombre);
             self.cliente.telefonos(r.data.telefonos);
 
+            self.setEstados(r.data.estados)
+
         })
         .catch(r => {});
+    },
+
+    setEstados: function(estados){
+        estados = estados.sort(function(a,b){
+          return new Date(b.fecha) - new Date(a.fecha)
+        })
+        let self = model.estadoController;
+        var estados_t = []
+        estados.forEach((e,i)=>{
+            estados_t.push({
+                id: e.id,
+                cliente_id: e.cliente_id,
+                estado: e.estado,
+                estado_name: e.estado == 1 ? 'Se dio de alta' : e.estado==2 ? 'Se dio de baja' : 'Suspendido',
+                fecha: moment(e.fecha).format('DD/MM/YYYY'),
+                observacion: e.observaciones,
+                class: e.estado == 1? 'bg-green':'bg-red',
+                icon: e.estado == 1?'fa fa-check bg-green':'fa fa-thumbs-down bg-red',
+                delete: i==0 ? true : false
+            })
+
+        });
+        self.estados(estados_t)
     },
 
 //archivo que se ejecuta al inicio cuando se carga la vista, lista todos los registros
     initialize: function (id_cliente) {
         var self = model.estadoController;
         self.getCliente(id_cliente);
+        self.estado.cliente_id(id_cliente);
 
         //llamada al servicio
         /*estadoService.getAll()

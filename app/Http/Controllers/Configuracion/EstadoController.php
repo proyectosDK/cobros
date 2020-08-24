@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Configuracion;
 
 use App\Estado;
+use App\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
