@@ -11,7 +11,9 @@
             <div class="box box-primary">
               <div class="box-header with-border">
                     <h1 class="box-title">Clientes <button class="btn btn-success btn-md" id="btnagregar" data-toggle="modal" data-target="#nuevo" data-bind="model.clienteController.clearData()" ><i class="fa fa-plus-circle"></i> Agregar</button></h1>
-                  <div class="box-tools pull-right">
+                  <div class="text-center" data-toggle="tooltip" title="si los meses atrasados es mayor a 3 el cliente puede ser suspendido">
+                    <button class="btn btn-danger btn-sm">candidatos a suspender</button>
+                    <button class="btn btn-success btn-sm">solventes</button>
                   </div>
               </div>
               <!-- /.box-header -->
@@ -23,7 +25,8 @@
                       <th>Cliente</th>
                       <th>Ubicación</th>
                       <th>Fecha inició</th>
-                      <th>Estado</th>
+                      <th width="10%">Meses atrasados</th>
+                      <th width="10%">Estado</th>
                       <th>Opciones</th>
                     </thead>
                     <tbody data-bind="dataTablesForEach : {
@@ -35,6 +38,7 @@
                         <td data-bind="text: primer_nombre+' '+segundo_nombre+' '+primer_apellido+' '+segundo_apellido "></td>
                         <td data-bind="text: ubicacion_cliente.nombre"></td>
                         <td width="15%" data-bind="text: moment(fecha_inicio).format('DD/MM/YYYY')"></td>
+                        <td  data-bind="text: meses_atrasados, css: (meses_atrasados <= 3 ? 'label-success':'label-danger')"></td>
                         <td width="10%" data-bind="text:  (estado == 'A' ? 'Activo' : 'Inactivo'), css: (estado == 'A' ? 'label-success':'label-danger') ">
                         </td>
 
@@ -52,6 +56,7 @@
                       <th>Cliente</th>
                       <th>Ubicación</th>
                       <th>Fecha inició</th>
+                      <th>Meses atrasados</th>
                       <th>Estado</th>
                       <th>Opciones</th>
                     </tfoot>

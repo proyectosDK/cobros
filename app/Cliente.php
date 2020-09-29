@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Cobro;
 use App\Estado;
 use App\Ubicacion;
 use App\TelefonosCliente;
@@ -37,5 +38,13 @@ class Cliente extends Model
 
     public function estados(){
         return $this->hasMany(Estado::class);
+    }
+
+    public function ultimo_cobro(){
+        return $this->hasOne(Cobro::class)->where('anulado',false)->latest();
+    }
+
+    public function cobros(){
+        return $this->hasMany(Cobro::class);
     }
 }

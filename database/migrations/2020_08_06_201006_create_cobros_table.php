@@ -17,13 +17,16 @@ class CreateCobrosTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('cliente_id');
             $table->unsignedBigInteger('serie_id');
+            $table->unsignedBigInteger('cuota_id');
             $table->integer('numero');
             $table->date('fecha');
             $table->decimal('total',11,2);
+            $table->boolean('anulado')->default(false);
             $table->timestamps();
 
             $table->foreign('cliente_id')->references('id')->on('clientes')->onUpdate('cascade');
             $table->foreign('serie_id')->references('id')->on('series')->onUpdate('cascade');
+            $table->foreign('cuota_id')->references('id')->on('cuotas')->onUpdate('cascade');
         });
     }
 

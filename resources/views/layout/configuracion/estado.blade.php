@@ -19,8 +19,10 @@
             </section>
 
             <div class="box box-primary">
+
               <div class="box-header with-border">
-                    <h1 class="box-title"> HISTORIAL CLIENTE </h1>
+                
+                <h1 class="box-title"> HISTORIAL CLIENTE </h1>
                   <div class="box-tools pull-right">
                   </div><hr />
 
@@ -36,10 +38,19 @@
                   </address>
 
                   <hr />
+              </div>
+              <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="tab" href="#estado">Estados</a></li>
+                  <li><a data-toggle="tab" href="#cobros">Cobros</a></li>
+                </ul>
 
-                  <h3> Cambiar estado</h3>
-
-                  <form id="formulario" class="form" data-bind="with: model.estadoController.estado">
+                <div class="tab-content">
+                  <div id="estado" class="tab-pane fade in active">
+                    <div class="box-header with-border">
+                          <h3> Cambiar estado</h3>
+                          
+                      </div>
+                    <form id="formulario" class="form" data-bind="with: model.estadoController.estado">
                       <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12">
                         <label for="rol">Acción <span class="text-danger"> *</span></label>
                             <select class="form-control" id="rol" data-bind="options: model.estadoController.estadosAction, optionsText: 'nombre', optionsValue: 'valor',
@@ -66,10 +77,8 @@
                         </div>
 
                   </form>
-                  
-              </div>
-              <!-- /.box-header -->
-              <!-- centro -->
+
+
               <div class="panel-body table-responsive" id="listadoregistros">
                 <div class="box-header with-border">
                   <h1 class="box-title"> HISTORIAL </h1>
@@ -126,6 +135,36 @@
 
               </ul>
               </div>
+                  </div>
+                  <div id="cobros" class="tab-pane fade">
+                    <div class="panel-body">
+                      <h3>Historial cobros</h3>
+                      <table id="tbllistado2" class="table table-striped table-bordered table-condensed table-hover">
+                    <thead>
+                      <th>numero</th>
+                      <th>fecha</th>
+                      <th>total</th>
+                      <th>estado</th>
+                    </thead>
+                    <tbody data-bind="dataTablesForEach : {
+                            data: model.estadoController.cobros,
+                            options: dataTableOptions
+                          }">  
+                      <tr>
+                        <td data-bind="text: serie.serie+'-'+numero"></td>
+                        <td data-bind="text: moment(fecha).format('DD/MM/YYYY')"></td>
+                        <td data-bind="text: formatCurrency(parseFloat(total).toFixed(2))"></td>
+                        <td width="10%" data-bind="text:  (anulado == 0 ? 'Aceptado' : 'Anulado'), css: (anulado == 0 ? 'label-success':'label-danger') ">
+                        </td>
+                    </tr>                          
+                    </tbody>
+                  </table>
+                    </div>
+                  </div>
+                </div>
+              
+              <!-- /.box-header -->
+              <!-- centro -->
 
               <!--Fin centro -->
             </div><!-- /.box -->

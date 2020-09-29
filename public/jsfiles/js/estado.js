@@ -21,6 +21,7 @@ model.estadoController = {
     },
 
     estados: ko.observableArray([]),
+    cobros:ko.observableArray([]),
     insertMode: ko.observable(false),
     editMode: ko.observable(false),
     gridMode: ko.observable(true),
@@ -172,7 +173,8 @@ model.estadoController = {
             self.cliente.ubicacion(r.data.ubicacion+' '+r.data.ubicacion_cliente.nombre);
             self.cliente.telefonos(r.data.telefonos);
 
-            self.setEstados(r.data.estados)
+            self.setEstados(r.data.estados);
+            self.cobros(r.data.cobros);
 
         })
         .catch(r => {});

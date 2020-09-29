@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Configuracion;
 
+use App\Anio;
 use App\Cliente;
+use Carbon\Carbon;
 use App\TelefonosCliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +28,40 @@ class ClienteController extends ApiController
     //retorna todos los registros de la tabla
     public function index()
     {
-        $clientes = Cliente::with('ubicacion_cliente','telefonos')->get();
+        $clientes = Cliente::with('ubicacion_cliente','telefonos','ultimo_cobro.detalle','estados')->get();
+
+        //actualizar estados
+        foreach ($clientes as $cliente) {
+
+            $ultimo_cobro = $cliente->ultimo_cobro;
+            $cliente->meses_atrasados = 0;
+
+            $now = Carbon::now();
+            $year = $now->year;
+            $day = $now->day;
+
+            $month = $day > 5 ? $now->month - 1 : $now->month - 2;
+
+            $rest_date = Carbon::createFromDate($year,$month,28);
+
+            if($ultimo_cobro){
+                $detalle = $ultimo_cobro->detalle()->with('anio')->get();
+                $anio = Anio::where('anio',$year)->first();
+                $sort_desc = $detalle->sortByDesc('anio_id')->sortByDesc('mes_id')->values()->first();
+                $date_l_month = Carbon::createFromDate($sort_desc->anio->anio,$sort_desc->mes_id,1);
+                $mes_atrasado = $date_l_month->diffInMonths($rest_date);
+                $cliente->meses_atrasados = $mes_atrasado;
+
+            }else{
+                $date_inicio = new Carbon($cliente->fecha_inicio);
+                $date_l_month = Carbon::createFromDate($date_inicio->year,$date_inicio->month-1,1);
+                $mes_atrasado = $date_l_month->diffInMonths($rest_date);
+                $cliente->meses_atrasados = $mes_atrasado;
+            }
+
+
+            
+        }
         return $this->showAll($clientes);
     }
 
@@ -66,8 +101,17 @@ class ClienteController extends ApiController
     //obtiene registro por id
     public function show(Cliente $cliente)
     {
-        $cliente = Cliente::where('id',$cliente->id)->with('telefonos','ubicacion_cliente','estados')->first();
+        $cliente = Cliente::where('id',$cliente->id)->with('telefonos','ubicacion_cliente','estados','cobros.serie')->first();
         return $this->showOne($cliente);
+    }
+
+    //obtener el ultimo pago realizado
+    public function getLastPayment($id){
+        $payment = DB::table('cobros')->where([
+                                        ['cliente_id', '=', $id],
+                                        ])->order_by('fecha', 'desc')->first();
+
+        return $this->showOne($payment);
     }
 
     //actualizar registro

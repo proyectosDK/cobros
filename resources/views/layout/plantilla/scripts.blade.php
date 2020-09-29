@@ -34,6 +34,7 @@
 <script src="{{asset('jsfiles/js/cliente.js')}}"></script>
 <script src="{{asset('jsfiles/js/estado.js')}}"></script>
 <script src="{{asset('jsfiles/js/serie.js')}}"></script>
+<script src="{{asset('jsfiles/js/cobro.js')}}"></script>
 
 <script src="{{asset('jsfiles/js/tipoUsuario.js')}}"></script>
 <script src="{{asset('jsfiles/js/user.js')}}"></script>
@@ -45,6 +46,8 @@
 <script src="{{asset('jsfiles/services/clienteService.js')}}"></script>
 <script src="{{asset('jsfiles/services/estadoService.js')}}"></script>
 <script src="{{asset('jsfiles/services/serieService.js')}}"></script>
+<script src="{{asset('jsfiles/services/cobroService.js')}}"></script>
+<script src="{{asset('jsfiles/services/mesService.js')}}"></script>
 
 <script src="{{asset('jsfiles/services/tipoUsuarioService.js')}}"></script>
 <script src="{{asset('jsfiles/services/userService.js')}}"></script>

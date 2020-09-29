@@ -41,6 +41,10 @@
             <li id="ltipoUsuario"><a href="{{ route('seriesView') }}"><i class="fa fa-circle-o"></i> Series</a></li>
             
           </ul>
+          <ul class="treeview-menu">
+            <li id="ltcobros"><a href="{{ route('cobrosView') }}"><i class="fa fa-circle-o"></i> Cobros</a></li>
+            
+          </ul>
         </li>        
       @endif
 

@@ -54,6 +54,13 @@ Route::resource('estados', 'Configuracion\EstadoController', ['except' => ['crea
 Route::get('/seriesView', 'Cobros\SerieController@view')->name('seriesView');
 Route::resource('series', 'Cobros\SerieController', ['except' => ['create', 'edit']]);
 
+//=====================COBROS==========================//
+Route::get('/cobrosView', 'Cobros\CobroController@view')->name('cobrosView');
+Route::resource('cobros', 'Cobros\CobroController', ['except' => ['create', 'edit']]);
+
+
+//=====================MESES==========================//
+Route::resource('mess', 'Configuracion\MesController', ['except' => ['create', 'edit']]);
 
 //=====================TIPO USUARIOS==========================//
 Route::get('tipoUsuariosView', 'Acceso\TipoUsuarioController@view')->name('tipoUsuariosView');
