@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Configuracion;
 
 use App\Anio;
+use App\Cobro;
 use App\Cliente;
 use Carbon\Carbon;
 use App\TelefonosCliente;
@@ -32,35 +33,11 @@ class ClienteController extends ApiController
 
         //actualizar estados
         foreach ($clientes as $cliente) {
-
-            $ultimo_cobro = $cliente->ultimo_cobro;
-            $cliente->meses_atrasados = 0;
-
-            $now = Carbon::now();
-            $year = $now->year;
-            $day = $now->day;
-
-            $month = $day > 5 ? $now->month - 1 : $now->month - 2;
-
-            $rest_date = Carbon::createFromDate($year,$month,28);
-
-            if($ultimo_cobro){
-                $detalle = $ultimo_cobro->detalle()->with('anio')->get();
-                $anio = Anio::where('anio',$year)->first();
-                $sort_desc = $detalle->sortByDesc('anio_id')->sortByDesc('mes_id')->values()->first();
-                $date_l_month = Carbon::createFromDate($sort_desc->anio->anio,$sort_desc->mes_id,1);
-                $mes_atrasado = $date_l_month->diffInMonths($rest_date);
-                $cliente->meses_atrasados = $mes_atrasado;
-
-            }else{
-                $date_inicio = new Carbon($cliente->fecha_inicio);
-                $date_l_month = Carbon::createFromDate($date_inicio->year,$date_inicio->month-1,1);
-                $mes_atrasado = $date_l_month->diffInMonths($rest_date);
-                $cliente->meses_atrasados = $mes_atrasado;
-            }
-
-
+            $meses_atrasados = $this->checkMeses($cliente);
             
+            $meses_atrasados > 0 ? $cliente->deudor = 1 : $cliente->deudor = 0;
+            $cliente->save();
+            $cliente->meses_atrasados = $meses_atrasados;
         }
         return $this->showAll($clientes);
     }
@@ -102,6 +79,9 @@ class ClienteController extends ApiController
     public function show(Cliente $cliente)
     {
         $cliente = Cliente::where('id',$cliente->id)->with('telefonos','ubicacion_cliente','estados','cobros.serie')->first();
+
+        $cliente->meses_atrasados = $this->checkMeses($cliente);
+
         return $this->showOne($cliente);
     }
 
@@ -175,5 +155,39 @@ class ClienteController extends ApiController
         $cliente->delete();
 
         return $this->showOne($cliente);
+    }
+
+    //verificar meses atrasados
+    public function checkMeses(Cliente $cliente){
+        $ultimo_cobro = Cobro::where([['cliente_id',$cliente->id],['anulado',0]])->orderBy('id','desc')->take(1)->first();
+
+        $meses_atrasados = 0;
+
+        $now = Carbon::now();
+        $year = $now->year;
+        $day = $now->day;
+
+        $month = $day > 5 ? $now->month - 1 : $now->month - 2;
+
+        $rest_date = Carbon::createFromDate($year,$month,28);
+
+        if($ultimo_cobro){
+            $detalle = $ultimo_cobro->detalle()->with('anio')->get();
+            $anio = Anio::where('anio',$year)->first();
+
+            $sort_desc = $detalle->sortByDesc('anio_id')->sortByDesc('mes_id')->values()->first();
+
+            $date_l_month = Carbon::createFromDate($sort_desc->anio->anio,$sort_desc->mes_id,1);
+            $mes_atrasado = $date_l_month->diffInMonths($rest_date);
+            $meses_atrasados = $mes_atrasado;
+
+        }else{
+            $date_inicio = new Carbon($cliente->fecha_inicio);
+            $date_l_month = Carbon::createFromDate($date_inicio->year,$date_inicio->month-1,1);
+            $mes_atrasado = $date_l_month->diffInMonths($rest_date);
+            $meses_atrasados = $mes_atrasado;
+        }
+
+        return $meses_atrasados;
     }
 }

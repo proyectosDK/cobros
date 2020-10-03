@@ -96,7 +96,12 @@ class EstadoController extends ApiController
             $last_estado = DB::table('estados')->latest('fecha')->first();//obtenemos el ultimo estado
 
             $cliente = Cliente::find($estado->cliente_id);
-            $cliente->estado = $last_estado->estado == 1 ? 'A':'I';//actalizar estado decliente
+
+            if(is_null($last_estado)){
+                $cliente->estado = "A";
+            }else{
+                $cliente->estado = $last_estado->estado == 1 ? 'A':'I';//actalizar estado decliente 
+            }
             $cliente->save();
 
         DB::commit();

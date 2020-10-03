@@ -13,6 +13,10 @@ class AnioSeeder extends Seeder
     public function run()
     {
         $data = new Anio();
+        $data->anio = 2019;
+        $data->save();
+
+        $data = new Anio();
         $data->anio = 2020;
        	$data->save();
     }

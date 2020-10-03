@@ -48,6 +48,12 @@
         </li>        
       @endif
 
+      <li id="mReporte">
+        <a href="{{ route('reportesView') }}">
+          <i class="fa fa-file"></i> <span>Reportes</span>
+        </a>
+      </li>
+
       @if(Auth::user()->tipo_usuario_id == 1)
         <li id="mAcceso" class="treeview">
           <a href="#">

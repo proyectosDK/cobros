@@ -34,6 +34,7 @@
                     <strong>Edad: </strong> <span data-bind="text: edad"></span> años<br>
                     <strong>Ubicación: </strong> <span data-bind="text: ubicacion"></span><br>
                     <strong>Fecha inicio de servicio: </strong> <span data-bind="text: fecha_inicio"></span><br>
+                    <strong>Meses atrasados: </strong> <span data-bind="text: meses_atrasados"></span><br>
                     <strong>Estado: </strong> <span data-bind="text: estado() == 'A' ? 'Activo':'Inactivo', css: estado()=='A' ? 'label-success':'label-danger' "></span><br>
                   </address>
 

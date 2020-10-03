@@ -26,6 +26,12 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('cambiarContrasenaView', 'Acceso\userController@viewCambiarContraseña')->name('cambiarContrasenaView');
 Route::name('cambiar_contraseña')->post('users_change_password','Acceso\UserController@changePassword');
 
+//=====================GRAFICAS PARA DASHBOARD==========================//
+Route::get('/dashboard/info', 'Dashboard\DashboardController@info')->name('info');
+Route::get('/dashboard/cobrosMeses', 'Dashboard\DashboardController@cobrosMeses')->name('cobrosMeses');
+Route::get('/dashboard/cobrosAnios', 'Dashboard\DashboardController@cobrosAnios')->name('cobrosAnios');
+Route::get('/dashboard/ubicacion', 'Dashboard\DashboardController@infoUbicacion')->name('ubicacion');
+Route::get('/dashboard/ubicacionDeudores', 'Dashboard\DashboardController@infoUbicacionDeudores')->name('ubicacionDeudores');
 
 //=====================ANIOS==========================//
 Route::get('aniosView', 'Configuracion\AnioController@view')->name('aniosView');
@@ -57,10 +63,16 @@ Route::resource('series', 'Cobros\SerieController', ['except' => ['create', 'edi
 //=====================COBROS==========================//
 Route::get('/cobrosView', 'Cobros\CobroController@view')->name('cobrosView');
 Route::resource('cobros', 'Cobros\CobroController', ['except' => ['create', 'edit']]);
+Route::get('/comprobante/{id}', 'Cobros\CobroController@comprobante')->name('comprobante');
 
 
 //=====================MESES==========================//
 Route::resource('mess', 'Configuracion\MesController', ['except' => ['create', 'edit']]);
+
+//=====================REPORTES==========================//
+Route::get('/reportesView', 'Reporte\ReporteController@view')->name('reportesView');
+Route::get('/reporte_cobros/{inicio?}/{fin?}', 'Reporte\ReporteController@cobros')->name('reporte_cobros');
+Route::get('/reporte_clientes/{opcion?}', 'Reporte\ReporteController@clientes')->name('reporte_clientes');
 
 //=====================TIPO USUARIOS==========================//
 Route::get('tipoUsuariosView', 'Acceso\TipoUsuarioController@view')->name('tipoUsuariosView');

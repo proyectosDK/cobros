@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cobros;
 use App\Cobro;
 use App\Serie;
 use App\DetallesCobro;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -97,5 +98,16 @@ class CobroController extends ApiController
         $cobro->anulado = 1;
         $cobro->save();
         return $this->showOne($cobro);
+    }
+
+    public function comprobante($id)
+    {
+        $cobro = Cobro::where('id',$id)->with('cliente','detalle.mes','detalle.anio', 'cliente.ubicacion_cliente')->first();
+
+        $pdf = PDF::loadView('layout.cobros.comprobante_pdf',['cobro'=>$cobro]);
+
+        #$pdf->setPaper('legal', 'portrait');
+
+        return $pdf->stream('comprobante'.$cobro->numero.'.pdf');
     }
 }

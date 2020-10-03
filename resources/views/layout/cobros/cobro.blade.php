@@ -30,12 +30,12 @@
                             options: dataTableOptions
                           }">  
                       <tr>
-                        <td data-bind="text: serie.serie+'-'+numero"></td>
+                        <td width="15%" data-bind="text: serie.serie+'-'+numero"></td>
                         <td data-bind="text: cliente.primer_nombre+' '+cliente.primer_apellido"></td>
                         <td data-bind="text: total"></td>
                         <td width="10%" data-bind="text:  (anulado == 0 ? 'Aceptado' : 'Anulado'), css: (anulado == 0 ? 'label-success':'label-danger') ">
                         </td>
-                        <td width="10%">
+                        <td width="15%">
                             <a class="btn btn-info btn-xs" data-bind="click: model.cobroController.editar" data-toggle="tooltip" title="ver"><i class="fa fa-eye"></i></a>
 
                             <a data-bind="visible: anulado == 0" href="#" class="btn btn-danger btn-xs" data-bind="click: model.cobroController.destroy" data-toggle="tooltip" title="anular"><i class="fa fa-close"></i></a>
@@ -211,6 +211,7 @@
                             <i class="fa fa-globe"></i>
                             <small class="pull-right" data-bind="text: moment(model.cobroController.info.fecha()).format('DD/MM/YYYY')"></small>
                         </h2>
+                        <a data-toggle="tooltip" title="imprimir comprobante" class="text-right btn btn-default btn-sm" data-bind="attr: { href: 'comprobante/'+model.cobroController.info.id() }" target="blank"> <i class="fa fa-print"></i> imprimir</a>
                     </div>
                     <!-- /.col -->
                 </div>

@@ -17,7 +17,8 @@ model.estadoController = {
         cui: ko.observable(""),
         nit: ko.observable(""),
         telefonos: ko.observableArray([]),
-        ubicacion: ko.observable("")
+        ubicacion: ko.observable(""),
+        meses_atrasados: ko.observable("")
     },
 
     estados: ko.observableArray([]),
@@ -76,6 +77,11 @@ model.estadoController = {
         let self = model.estadoController;
      //validar formulario
         if (!model.validateForm('#formulario')) { 
+            return;
+        }
+
+        if(self.estado.estado() == 2 && self.cliente.meses_atrasados() > 0){
+            toastr.error("cliente tiene meses atrasados, no se puede dar de baja","error");
             return;
         }
 
@@ -171,6 +177,7 @@ model.estadoController = {
             self.cliente.fecha_inicio(moment(r.data.fecha_inicio).format('DD/MM/YYYY'));
             self.cliente.estado(r.data.estado);
             self.cliente.ubicacion(r.data.ubicacion+' '+r.data.ubicacion_cliente.nombre);
+            self.cliente.meses_atrasados(r.data.meses_atrasados);
             self.cliente.telefonos(r.data.telefonos);
 
             self.setEstados(r.data.estados);

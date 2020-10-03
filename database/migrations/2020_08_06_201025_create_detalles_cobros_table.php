@@ -19,8 +19,8 @@ class CreateDetallesCobrosTable extends Migration
             $table->unsignedBigInteger('anio_id');
             $table->unsignedBigInteger('mes_id');
             $table->decimal('lectura',10,2);
-            $table->decimal('agua_extra',10,2);
-            $table->decimal('total_extra',11,2);
+            $table->decimal('agua_extra',10,2)->default(0);
+            $table->decimal('total_extra',11,2)->default(0);
             $table->decimal('total_mes',11,2);
             $table->timestamps();
 

@@ -33,6 +33,7 @@ model.cobroController = {
     },
 
     info: {
+        id: ko.observable(null),
         numero: ko.observable(""),
         cliente: ko.observable(""),
         cui: ko.observable(""),
@@ -47,6 +48,8 @@ model.cobroController = {
 
 
     cobros: ko.observableArray([]),
+    info_cobros: ko.observableArray([]),
+    info_cobros_anios: ko.observableArray([]),
     meses: ko.observableArray([]),
     meses_activos: ko.observableArray([]),
     clientes: ko.observableArray([]),
@@ -122,6 +125,7 @@ model.cobroController = {
         self.info.cuota(data.cuota.cuota);
         self.info.total(data.total);
         self.info.anulado(data.anulado);
+        self.info.id(data.id);
 
         self.editMode(true);
         self.gridMode(false);
@@ -132,6 +136,29 @@ model.cobroController = {
         let self = model.cobroController;
      //validar formulario
         if (!model.validateForm('#formulario')) { 
+            return;
+        }
+
+        if(self.cobro.detalle().length == 0){
+            toastr.error("no se ah agregado ningun mes","error");
+            return;
+        }
+
+        if(self.cobro.detalle().length == 1){
+            self.meses_activos().forEach((m,i)=>{
+                if(m.id < self.cobro.detalle()[0].mes_id){
+                    bootbox.alert({message: "por favor ingrese los meses atrasadados en orden de antiguedad",title:"error"});
+                    return;
+                }
+            });
+        }
+
+        var results = self.cobro.detalle().map(a => a.mes_id);
+        
+        var check_order = results.every((num, i) => i === results.length - 1 || (results[i + 1] - num) == 1 );
+
+        if(!check_order){
+            bootbox.alert({message: "por favor ingrese los meses atrasadados en orden de antiguedad, no es posible dejar meses de por medio",title:"error"});
             return;
         }
 
@@ -285,6 +312,26 @@ model.cobroController = {
         var year = date.year()
         var day  = date.date()
 
+        var cliente = self.clientes().find(c=>c.id == self.cobro.cliente_id());
+        
+        if(cliente.estado == "I"){
+            cliente.estados = cliente.estados.sort(function(a,b){
+              return new Date(b.fecha) - new Date(a.fecha)
+            });
+            var ultima_fecha = moment(cliente.estados[0].fecha)
+
+            u_month = ultima_fecha.month();
+            u_year = ultima_fecha.year();
+
+            if(anio > u_year){
+                self.meses_activos([]);
+                return
+            }else{
+                meses = meses.filter(x=>x.id <= u_month);
+            }
+        }
+        
+
         if (year == anio){
             var meses = day >=5 ? meses.filter(x=>x.id <= month) : meses.filter(x=>x.id < month)
         }
@@ -294,14 +341,13 @@ model.cobroController = {
 
         cobros.forEach((c,i)=>{
             c.detalle.forEach((d,j)=>{
-                if(d.anio_id == self.d_cobro.anio_id()){
+                if(d.anio_id == self.d_cobro.anio_id() && c.anulado == 0){
                     meses_cobros.push(d.mes_id)
                 }
             })
             //meses_cobros = [...meses_cobros, ...c.detalle];
         })
 
-        console.log(meses_cobros)
         meses = meses.filter(f => !meses_cobros.includes(f.id));
 
         self.meses_activos(meses)
@@ -348,6 +394,10 @@ model.cobroController = {
             total_mes: total_mes,
             total_extra: total_extra,
             agua_extra: agua_extra
+        });
+
+        self.cobro.detalle.sort(function(a, b) {
+            return a.mes_id-b.mes_id
         });
 
         self.totalAmount()
@@ -406,7 +456,6 @@ model.cobroController.cobro.cliente_id.subscribe(function (value) {
         if(model.cobroController.d_cobro.anio_id() !== null && model.cobroController.d_cobro.anio_id() !== undefined){
             var anio = model.cobroController.anios().find(a => a.id == model.cobroController.d_cobro.anio_id())
             model.cobroController.filterMeses(anio.anio,model.cobroController.meses()) 
-        }
-        
+        }    
     }
 })
