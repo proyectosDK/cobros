@@ -5,7 +5,7 @@
     <ul class="sidebar-menu">
       <li class="header"></li>
         <li id="mEscritorio">
-        <a href="{{ route('/') }}">
+        <a href="{{ route('home') }}">
           <i class="fa fa-tasks"></i> <span>Escritorio</span>
         </a>
       </li>
