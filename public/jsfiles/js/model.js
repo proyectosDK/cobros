@@ -221,6 +221,10 @@ ko.bindingHandlers.dataTablesForEach = {
 
 var model = {
     view: ko.observable("welcome"),
+
+    //baseUrl: '',
+    baseUrl: 'cobros',
+
     rsvp: {
         email: ko.observable(""),
         password: ""
