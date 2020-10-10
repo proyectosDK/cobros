@@ -96,14 +96,14 @@
       fin = 0;
     }
 
-    window.open('/reporte_cobros/'+inicio+'/'+fin,'_blank');
+    window.open(model.baseUrl+'/reporte_cobros/'+inicio+'/'+fin,'_blank');
 
     
   }
 
   function reporteClientes(){
     var option = $('#option_cliente').val();
-    window.open('/reporte_clientes/'+option,'_blank');
+    window.open(model.baseUrl+'/reporte_clientes/'+option,'_blank');
   }
 </script>
 
