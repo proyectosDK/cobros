@@ -190,14 +190,14 @@
   var colors = ['#3FBF7F','#ED1C11','#161C19','#201C9B','#BF3F3F','#BF7F3F','#BF3FBF','#5E0B07','#B9B6B6','#2F272D','#987654'];
 
   $(document).ready(function () {
-    $.get(model.baseUrl+'/dashboard/info', function(data){
+    $.get('dashboard/info', function(data){
             document.getElementById("clientes").innerHTML = data.clientes;
             document.getElementById("cli_act").innerHTML = data.inactivos;
             document.getElementById("cli_d").innerHTML = data.deudores;
             document.getElementById("cob").innerHTML = data.total_cobros;
         });
 
-    $.get(model.baseUrl+'/dashboard/cobrosMeses', function(data){
+    $.get('dashboard/cobrosMeses', function(data){
           lineChart(data,'cobrosMeses');
           var table = [];
             for(var $i = 0; $i<data.info.length; $i++){
@@ -209,7 +209,7 @@
             model.cobroController.info_cobros(table)
       });
 
-    $.get(model.baseUrl+'/dashboard/cobrosAnios', function(data){
+    $.get('dashboard/cobrosAnios', function(data){
           lineChart(data,'cobrosAnios');
           var table = [];
             for(var $i = 0; $i<data.info.length; $i++){
@@ -221,11 +221,11 @@
             model.cobroController.info_cobros_anios(table)
       });
 
-      $.get(model.baseUrl+'/dashboard/ubicacion', function(data){
+      $.get('dashboard/ubicacion', function(data){
           pieChart(data,'ubicacionChart');
       });
 
-      $.get(model.baseUrl+'/dashboard/ubicacionDeudores', function(data){
+      $.get('dashboard/ubicacionDeudores', function(data){
           pieChart(data,'ubicacionDeudoresChart');
       });
   });

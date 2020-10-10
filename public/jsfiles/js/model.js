@@ -223,7 +223,7 @@ var model = {
     view: ko.observable("welcome"),
 
     //baseUrl: '',
-    baseUrl: 'cobros',
+    //baseUrl: 'cobros',
 
     rsvp: {
         email: ko.observable(""),
