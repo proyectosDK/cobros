@@ -4,9 +4,11 @@ namespace App;
 
 use App\Cobro;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Serie extends Model
+class Serie extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'series';
 
     protected $fillable = [

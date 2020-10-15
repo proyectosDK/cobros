@@ -12,7 +12,7 @@ class TipoUsuarioController extends ApiController
    public function __construct()
     {
         parent::__construct(); //proteje las rutas
-        $this->middleware('consulta');
+        $this->middleware('admin');
     }
 
     //retorna vista principal

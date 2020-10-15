@@ -15,7 +15,7 @@ class CobroController extends ApiController
 {
     public function __construct()
     {
-        #parent::__construct();//proteger controlador
+        parent::__construct();//proteger controlador
         #$this->middleware('consulta');
     }
 
@@ -50,6 +50,7 @@ class CobroController extends ApiController
             $data = $request->all();
 
             $serie = Serie::find($request->serie_id);
+            
             if($request->numero > $serie->total){
                 return $this->errorResponse("el numero total de comprobantes se ha agotado, por favor ingrese un nuevo",421);
             }

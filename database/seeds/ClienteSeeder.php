@@ -2,6 +2,7 @@
 
 use App\Mes;
 use App\Cobro;
+use App\Serie;
 use App\Cliente;
 use App\DetallesCobro;
 use Illuminate\Database\Seeder;
@@ -17,6 +18,8 @@ class ClienteSeeder extends Seeder
     public function run()
     {
         $meses = Mes::all();
+        $serie = Serie::find(1);
+        $c = 1;
         for ($i=0; $i < 100 ; $i++) { 
         	$data = new Cliente;
         	$data->cui = '123456789011 '.$i;
@@ -30,13 +33,18 @@ class ClienteSeeder extends Seeder
         	$data->save();
 
             $cobro = new Cobro;
-            $cobro->numero = $i;
+            $cobro->numero = $c;
             $cobro->cliente_id = $data->id;
             $cobro->total = 0;
             $cobro->serie_id = 1;
             $cobro->cuota_id = 1;
             $cobro->fecha = '2019-01-12';
             $cobro->save();
+
+            $serie->no_actual = $cobro->numero;
+            $serie->save();
+            
+            $c++;
 
             foreach ($meses as $mes) {
                 $detalle = new DetallesCobro;
@@ -46,6 +54,7 @@ class ClienteSeeder extends Seeder
                 $detalle->lectura = rand(1000,31500);
                 $detalle->agua_extra = 0;
                 $detalle->total_extra = 0;
+
                 if($detalle->lectura > 30000){
                     $detalle->agua_extra = $detalle->lectura - 30000;
                     $detalle->total_extra = $detalle->agua_extra * 2.5;
@@ -59,13 +68,18 @@ class ClienteSeeder extends Seeder
             $cobro->save();
 
             $cobro = new Cobro;
-            $cobro->numero = 100+$i;
+            $cobro->numero = $c;
             $cobro->cliente_id = $data->id;
             $cobro->total = 0;
             $cobro->serie_id = 1;
             $cobro->cuota_id = 1;
             $cobro->fecha = '2020-01-09';
             $cobro->save();
+
+            $serie->no_actual = $c;
+            $serie->save();
+
+            $c++;
 
             foreach ($meses as $mes) {
                 $detalle = new DetallesCobro;
@@ -80,6 +94,7 @@ class ClienteSeeder extends Seeder
                     $detalle->agua_extra = $detalle->lectura - 30000;
                     $detalle->total_extra = $detalle->agua_extra * 2.5;
                 }
+
                 $detalle->total_mes = 250 + $detalle->total_extra;
                 $detalle->save();
                 $cobro->total+=$detalle->total_mes;

@@ -11,7 +11,7 @@ class SerieController extends ApiController
 {
    public function __construct()
     {
-        #parent::__construct();//proteger controlador
+        parent::__construct();//proteger controlador
         #$this->middleware('consulta');
     }
 

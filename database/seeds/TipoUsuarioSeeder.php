@@ -10,5 +10,9 @@ class TipoUsuarioSeeder extends Seeder
         $data = new TipoUsuario();
         $data->nombre = 'admin';
         $data->save();
+
+        $data = new TipoUsuario();
+        $data->nombre = 'receptor';
+        $data->save();
     }
 }

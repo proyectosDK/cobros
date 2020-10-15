@@ -13,7 +13,7 @@ class AnioController extends ApiController
     public function __construct()
     {
         parent::__construct();//proteger controlador
-        #$this->middleware('consulta');
+        $this->middleware('admin')->except('index');
     }
 
     //retorna vista principal del index
