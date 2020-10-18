@@ -7,11 +7,9 @@ use App\Anio;
 use App\Cobro;
 use App\Cuota;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class DetallesCobro extends Model implements Auditable
+class DetallesCobro extends Model
 {
-    use \OwenIt\Auditing\Auditable;
     protected $table = 'detalles_cobros';
 
     protected $fillable = [

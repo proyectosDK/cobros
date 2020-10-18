@@ -33,7 +33,7 @@ class AnioController extends ApiController
     public function store(Request $request)
     {
         $reglas = [
-            'anio' => 'required|string'
+            'anio' => 'required|integer'
         ];
         
         $this->validate($request, $reglas);
@@ -53,7 +53,7 @@ class AnioController extends ApiController
     public function update(Request $request, anio $anio)
     {
         $reglas = [
-            'anio' => 'required|string'
+            'anio' => 'required|integer'
         ];
 
         $this->validate($request, $reglas);
