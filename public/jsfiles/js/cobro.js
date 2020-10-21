@@ -145,12 +145,16 @@ model.cobroController = {
         }
 
         if(self.cobro.detalle().length == 1){
+            var is_return = false
             self.meses_activos().forEach((m,i)=>{
                 if(m.id < self.cobro.detalle()[0].mes_id){
-                    bootbox.alert({message: "por favor ingrese los meses atrasadados en orden de antiguedad",title:"error"});
-                    return;
+                    is_return = true
                 }
             });
+            if (is_return){
+                bootbox.alert({message: "por favor ingrese los meses atrasadados en orden de antiguedad",title:"error"});
+                return
+            }
         }
 
         var results = self.cobro.detalle().map(a => a.mes_id);
@@ -313,11 +317,13 @@ model.cobroController = {
         var day  = date.date()
 
         var cliente = self.clientes().find(c=>c.id == self.cobro.cliente_id());
+
         
         if(cliente.estado == "I"){
             cliente.estados = cliente.estados.sort(function(a,b){
               return new Date(b.fecha) - new Date(a.fecha)
             });
+
             var ultima_fecha = moment(cliente.estados[0].fecha)
 
             u_month = ultima_fecha.month();
@@ -338,6 +344,18 @@ model.cobroController = {
 
         var cobros = self.cobros().filter(c=>c.cliente_id == self.cobro.cliente_id())
         var meses_cobros = []
+
+        if(cobros.length == 0){
+            var inicio_servicio = moment(cliente.fecha_inicio);
+            var i_year = inicio_servicio.year();
+            var i_month = inicio_servicio.month();
+
+            if(i_year !== anio){
+                meses = []
+            }else{
+                meses = meses.filter(x=>x.id >= i_month);
+            }
+        }
 
         cobros.forEach((c,i)=>{
             c.detalle.forEach((d,j)=>{

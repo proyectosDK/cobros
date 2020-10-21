@@ -31,7 +31,6 @@
       </li>
       @endif
 
-      @if(Auth::user()->tipo_usuario_id == 1)
         <li id="mAcceso" class="treeview">
           <a href="#">
             <i class="fa fa-money"></i> <span>Cobros</span>
@@ -45,8 +44,7 @@
             <li id="ltcobros"><a href="{{ route('cobrosView') }}"><i class="fa fa-circle-o"></i> Cobros</a></li>
             
           </ul>
-        </li>        
-      @endif
+        </li>   
 
       <li id="mReporte">
         <a href="{{ route('reportesView') }}">
@@ -69,15 +67,9 @@
       @endif
       
       <li>
-        <a href="#">
+        <a href="{{ asset('documentos/manual.pdf') }}" target="_blank">
           <i class="fa fa-plus-square"></i> <span>Ayuda</span>
           <small class="label pull-right bg-red">PDF</small>
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <i class="fa fa-info-circle"></i> <span>Acerca De...</span>
-          <small class="label pull-right bg-yellow">SICOB</small>
         </a>
       </li>
                   

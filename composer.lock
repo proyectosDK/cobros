@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b0c416614b003668fa4af54dc147bbf",
+    "content-hash": "620e5c007839ddd62ce1098729ec7a22",
     "packages": [
         {
             "name": "arcanedev/log-viewer",
@@ -1482,23 +1482,23 @@
         },
         {
             "name": "owen-it/laravel-auditing",
-            "version": "v10.0.0",
+            "version": "v11.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/owen-it/laravel-auditing.git",
-                "reference": "50b0d9bc8d47a6fd873427c012c6710850e73a34"
+                "reference": "60fb60ae00a7fe38c29e224b3dc8ad94116ae00a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/owen-it/laravel-auditing/zipball/50b0d9bc8d47a6fd873427c012c6710850e73a34",
-                "reference": "50b0d9bc8d47a6fd873427c012c6710850e73a34",
+                "url": "https://api.github.com/repos/owen-it/laravel-auditing/zipball/60fb60ae00a7fe38c29e224b3dc8ad94116ae00a",
+                "reference": "60fb60ae00a7fe38c29e224b3dc8ad94116ae00a",
                 "shasum": ""
             },
             "require": {
-                "illuminate/console": "^5.8|^6.0|^7.0",
-                "illuminate/database": "^5.8|^6.0|^7.0",
-                "illuminate/filesystem": "^5.8|^6.0|^7.0",
-                "php": ">=7.2.5"
+                "illuminate/console": "^5.8|^6.0|^7.0|^8.0",
+                "illuminate/database": "^5.8|^6.0|^7.0|^8.0",
+                "illuminate/filesystem": "^5.8|^6.0|^7.0|^8.0",
+                "php": "^7.3"
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
@@ -1561,7 +1561,7 @@
                 "revision",
                 "tracking"
             ],
-            "time": "2020-03-23T22:49:02+00:00"
+            "time": "2020-09-13T23:51:26+00:00"
         },
         {
             "name": "paragonie/random_compat",

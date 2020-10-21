@@ -19,7 +19,8 @@
               <div class="panel-body table-responsive" id="listadoregistros">
                   <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                     <thead>
-                      <th>numero</th>
+                      <th>numero/serie</th>
+                      <th>fecha</th>
                       <th>cliente</th>
                       <th>total</th>
                       <th>estado</th>
@@ -31,6 +32,7 @@
                           }">  
                       <tr>
                         <td width="15%" data-bind="text: serie.serie+'-'+numero"></td>
+                        <td width="15%" data-bind="text: moment(fecha).format('DD/MM/YYYY')"></td>
                         <td data-bind="text: cliente.primer_nombre+' '+cliente.primer_apellido"></td>
                         <td data-bind="text: total"></td>
                         <td width="10%" data-bind="text:  (anulado == 0 ? 'Aceptado' : 'Anulado'), css: (anulado == 0 ? 'label-success':'label-danger') ">
@@ -44,6 +46,7 @@
                     </tbody>
                     <tfoot>
                       <th>número</th>
+                      <th>fecha</th>
                       <th>total</th>
                       <th>estado</th>
                       <th>Opciones</th>

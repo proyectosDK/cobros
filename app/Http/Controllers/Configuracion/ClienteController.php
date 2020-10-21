@@ -17,7 +17,7 @@ class ClienteController extends ApiController
     public function __construct()
     {
         parent::__construct();//proteger controlador
-        #$this->middleware('consulta');
+        $this->middleware('admin')->except('index','show','getLastPayment','checkMeses');
     }
 
     //retorna vista principal del index
