@@ -112,7 +112,7 @@
                                         optionsValue: 'id',
                                         value: anio_id, 
                                         selectPickerOptions: { optionsArray: model.cobroController.anios},
-                                        optionsCaption: '--selecione cliente--'"
+                                        optionsCaption: '--selecione año--'"
                                         data-error=".errorAnio"
                                         required>
                                 </select>
